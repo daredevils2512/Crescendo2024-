@@ -17,9 +17,9 @@ import frc.robot.Constants;
 
 public class DriveSub extends SubsystemBase {
 
-  private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
-  private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
-  private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
+   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
+  // private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
+  // private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
   private final NetworkTableEntry leftSpeed = networkTable.getEntry("left speed");
   private final NetworkTableEntry rightSpeed = networkTable.getEntry("right speed");
 
@@ -38,7 +38,6 @@ public class DriveSub extends SubsystemBase {
   private final Encoder rightEncoder;
 
   public DriveSub() {
-
     frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_RIGHT_ID, MotorType.kBrushless);
     backLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_RIGHT_ID, MotorType.kBrushless);
     frontRight = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
@@ -56,13 +55,15 @@ public class DriveSub extends SubsystemBase {
 
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
-    // invert
+
   }
 
   public void arcadeDrive(double move, double turn) {
-    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, turn, true);
+    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);
     frontLeft.set (wheelSpeeds.left);
     frontRight.set(wheelSpeeds.right);
+    leftSpeed.setDouble(wheelSpeeds.left);
+    rightSpeed.setDouble(wheelSpeeds.right);
   }
 
   public double getLeftDistance() {
@@ -87,8 +88,8 @@ public class DriveSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    leftDistance.setDouble(getLeftDistance());
-    rightDistance.setDouble(getRightDistance());
+    // leftDistance.setDouble(getLeftDistance());
+    // rightDistance.setDouble(getRightDistance());
     leftSpeed.setDouble(getLeftSpeed());
     rightSpeed.setDouble(getRightSpeed());
 
