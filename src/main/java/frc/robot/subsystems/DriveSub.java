@@ -37,29 +37,33 @@ public class DriveSub extends SubsystemBase {
   private final Encoder rightEncoder;
 
   public DriveSub() {
-    frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_RIGHT_ID, MotorType.kBrushless);
-    backLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_RIGHT_ID, MotorType.kBrushless);
-    frontRight = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
-    backRight = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_LEFT_ID, MotorType.kBrushless);
+    frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
+    backLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_LEFT_ID, MotorType.kBrushless);
+    frontRight = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_RIGHT_ID, MotorType.kBrushless);
+    backRight = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_RIGHT_ID, MotorType.kBrushless);
+
+    frontLeft.restoreFactoryDefaults();
+    backLeft.restoreFactoryDefaults();
+    frontRight.restoreFactoryDefaults();
+    backRight.restoreFactoryDefaults();
 
     drivelimit = new SlewRateLimiter(0);
 
-    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A,
-        Constants.DrivetrainConstants.LEFT_ENCODER_B);
-    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A,
-        Constants.DrivetrainConstants.RIGHT_ENCODER_B);
+    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);
+    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A, Constants.DrivetrainConstants.RIGHT_ENCODER_B);
 
     leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
 
-    backLeft.follow(frontLeft);
-    backRight.follow(frontRight);
-
+    backLeft.follow(frontLeft, false);
+    backRight.follow(frontRight, true);
   }
 
   public void arcadeDrive(double move, double turn) {
-    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);
-    frontLeft.set(wheelSpeeds.left);
+    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(turn, -move, true);//documentation is backwards
+    System.out.println("turn " + turn);
+    frontLeft.set(wheelSpeeds.left); // set to 0
+    //System.out.println("left " + wheelSpeeds.left + "right" + wheelSpeeds.right);
     frontRight.set(wheelSpeeds.right);
     leftSpeed.setDouble(wheelSpeeds.left);
     rightSpeed.setDouble(wheelSpeeds.right);
