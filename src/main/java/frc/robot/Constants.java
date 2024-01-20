@@ -35,6 +35,9 @@ public final class Constants {
     public static final int ACTUATE_ENCODER_A = 6;
     public static final int ACTUATE_ENCODER_B = 7;
 
+    public static final int INTAKE_LIMIT_SWITCH_TOP = 8;
+    public static final int INTAKE_LIMIT_SWITCH_BOTTOM = 9;
+
   }
 
   public static class IoConstants {

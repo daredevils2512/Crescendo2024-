@@ -31,16 +31,23 @@ public class RobotContainer {
   private void configureBindings() {
     // driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(),xbox.getRightX()))); //using both sticks
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX()))); //both on left
-    intakeSub.setDefaultCommand(intakeSub.run(() -> intakeSub.runActuate(xbox.getRightY())));
+    intakeSub.setDefaultCommand(intakeSub.run(() -> intakeSub.runActuate(-xbox.getRightY())));
 
-    xbox.rightBumper().whileTrue((IntakeCommands.runIntake(intakeSub)));
-    xbox.leftBumper().whileTrue((IntakeCommands.runIntake(intakeSub)));
+    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub));
+    xbox.y().onTrue(IntakeCommands.setActuateUp(intakeSub));
+    xbox.x().onTrue(IntakeCommands.setActuateDown(intakeSub));
+    xbox.a().onTrue(IntakeCommands.toggleActuate(intakeSub));
   }
 
   // public Command getAutonomousCommand() {
   // return Autos.exampleAuto(m_exampleSubsystem);
   // }
 }
+
+
+
+
+
 
 // beware the watermelon man
 // how bad can the watermelon man possibly be?

@@ -13,11 +13,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-//import frc.robot.Constants.DrivetrainConstants; //do this
 
 public class DriveSub extends SubsystemBase {
 
-   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
+  private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
   // private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
   // private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
   private final NetworkTableEntry leftSpeed = networkTable.getEntry("left speed");
@@ -60,7 +59,7 @@ public class DriveSub extends SubsystemBase {
 
   public void arcadeDrive(double move, double turn) {
     WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);
-    frontLeft.set (wheelSpeeds.left);
+    frontLeft.set(wheelSpeeds.left);
     frontRight.set(wheelSpeeds.right);
     leftSpeed.setDouble(wheelSpeeds.left);
     rightSpeed.setDouble(wheelSpeeds.right);
