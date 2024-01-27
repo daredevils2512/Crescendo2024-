@@ -11,6 +11,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,6 +34,8 @@ public class DriveSub extends SubsystemBase {
 
   private boolean inverted = false;  
 
+  private final DifferentialDrive drive;
+
   public DriveSub() {
     frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
     backLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_BACK_LEFT_ID, MotorType.kBrushless);
@@ -51,8 +55,21 @@ public class DriveSub extends SubsystemBase {
     leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
 
-    backLeft.follow(frontLeft, false);
-    backRight.follow(frontRight, true);
+    // backLeft.follow(frontLeft, false);
+    // backRight.follow(frontRight, true);
+    backLeft.setInverted(false);
+    frontLeft.setInverted(false);
+    backRight.setInverted(true);
+    frontRight.setInverted(true);
+
+
+    drive = new DifferentialDrive(speed -> {
+      // frontLeft.set(speed);
+      backLeft.set(speed);
+    }, speed -> {
+      frontRight.set(speed);
+      // backRight.set(speed);
+    });
   }
 
   public void arcadeDrive(double move, double turn) {
@@ -61,10 +78,12 @@ public class DriveSub extends SubsystemBase {
     }
 
     WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);//documentation is backwards
-    frontLeft.set(wheelSpeeds.left);
-    frontRight.set(wheelSpeeds.right);
+    // frontLeft.set(wheelSpeeds.left);
+    // frontRight.set(wheelSpeeds.right);
     leftSpeed.setDouble(wheelSpeeds.left);
     rightSpeed.setDouble(wheelSpeeds.right);
+
+    drive.tankDrive(wheelSpeeds.left, wheelSpeeds.right, false);
 
     moveEntry.setDouble(move);
   }
@@ -101,7 +120,15 @@ public class DriveSub extends SubsystemBase {
   public void periodic() {
     leftSpeed.setDouble(getLeftSpeed());
     rightSpeed.setDouble(getRightSpeed());
+    networkTable.getEntry("frontLeft amp").setDouble(frontLeft.getOutputCurrent());
+    networkTable.getEntry("backLeft amp").setDouble(backLeft.getOutputCurrent());
+    networkTable.getEntry("frontRight amp").setDouble(frontRight.getOutputCurrent());
+    networkTable.getEntry("backRight amp").setDouble(backRight.getOutputCurrent());
 
+    networkTable.getEntry("frontLeft out").setDouble(frontLeft.getAppliedOutput());
+    networkTable.getEntry("backLeft out").setDouble(backLeft.getAppliedOutput());
+    networkTable.getEntry("frontRight out").setDouble(frontRight.getAppliedOutput());
+    networkTable.getEntry("backRight out").setDouble(backRight.getAppliedOutput());
   }
 
 }
