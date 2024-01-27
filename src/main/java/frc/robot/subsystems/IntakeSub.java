@@ -20,7 +20,7 @@ public class IntakeSub extends SubsystemBase {
   // net work table of toggles and all
 
   private final WPI_VictorSPX intakeMotor;
-  private final WPI_VictorSPX actuateMotor;
+  private final WPI_VictorSPX intakeActuateMotor;
   private final Encoder actuateEncoder;
   private final SlewRateLimiter moveLimit;
   private final DigitalInput limitSwitchTop;
@@ -28,7 +28,7 @@ public class IntakeSub extends SubsystemBase {
 
   public IntakeSub() {
     intakeMotor = new WPI_VictorSPX(Constants.IntakeConstants.INTAKE_MOTOR_ID);
-    actuateMotor = new WPI_VictorSPX(Constants.IntakeConstants.ACTUATE_MOTOR_ID);
+    intakeActuateMotor = new WPI_VictorSPX(Constants.IntakeConstants.ACTUATE_MOTOR_ID);
     actuateEncoder = new Encoder(Constants.IntakeConstants.ACTUATE_ENCODER_A, Constants.IntakeConstants.ACTUATE_ENCODER_B);
     moveLimit = new SlewRateLimiter(0);
     limitSwitchTop = new DigitalInput(Constants.IntakeConstants.INTAKE_LIMIT_SWITCH_TOP);
@@ -51,7 +51,7 @@ public class IntakeSub extends SubsystemBase {
       speed = Math.max(speed, 0);
     }
 
-    actuateMotor.set(speed);
+    intakeActuateMotor.set(speed);
   }
 
   public boolean isAtTop(){

@@ -43,6 +43,8 @@ public class DriveSub extends SubsystemBase {
     frontRight.restoreFactoryDefaults();
     backRight.restoreFactoryDefaults();
 
+    frontRight.setInverted(true);
+
     drivelimit = new SlewRateLimiter(0);
 
     leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);

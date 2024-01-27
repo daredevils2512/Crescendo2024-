@@ -27,13 +27,13 @@ public final class Constants {
 
     // Motors
     public static final int INTAKE_MOTOR_ID = 5;
-    public static final int ACTUATE_MOTOR_ID = 6;
+    public static final int INTAKE_ACTUATE_MOTOR_ID = 6;
 
     // Encoders
     public static final int INTAKE_ENCODER_A = 4;
     public static final int INTAKE_ENCODER_B = 5;
-    public static final int ACTUATE_ENCODER_A = 6;
-    public static final int ACTUATE_ENCODER_B = 7;
+    public static final int INTAKE_ACTUATE_ENCODER_A = 6;
+    public static final int INTAKE_ACTUATE_ENCODER_B = 7;
     public static final int INTAKE_LIMIT_SWITCH_TOP = 8;
     public static final int INTAKE_LIMIT_SWITCH_BOTTOM = 9;
 
