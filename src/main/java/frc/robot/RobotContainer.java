@@ -33,6 +33,8 @@ public class RobotContainer {
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX()))); //both on left
     intakeSub.setDefaultCommand(intakeSub.run(() -> intakeSub.runActuate(-xbox.getRightY())));
 
+    xbox.b().onTrue(DriveCommands.toggleInverted(driveSub));
+
     xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub));
     xbox.y().onTrue(IntakeCommands.setActuateUp(intakeSub));
     xbox.x().onTrue(IntakeCommands.setActuateDown(intakeSub));

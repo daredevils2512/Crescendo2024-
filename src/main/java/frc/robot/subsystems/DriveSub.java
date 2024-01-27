@@ -17,15 +17,9 @@ import frc.robot.Constants;
 public class DriveSub extends SubsystemBase {
 
   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
-  // private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
-  // private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
   private final NetworkTableEntry leftSpeed = networkTable.getEntry("left speed");
   private final NetworkTableEntry rightSpeed = networkTable.getEntry("right speed");
-
-  // private final NetworkTableEntry right1Temp = networkTable.getEntry("right 1 temp");
-  // private final NetworkTableEntry right2Temp = networkTable.getEntry("right 2 temp");
-  // private final NetworkTableEntry left1Temp = networkTable.getEntry("left 1 temp");
-  // private final NetworkTableEntry left2Temp = networkTable.getEntry("left 2 temp");
+  private final NetworkTableEntry moveEntry = networkTable.getEntry("move");
 
   private final CANSparkMax frontLeft;
   private final CANSparkMax frontRight;
@@ -35,6 +29,8 @@ public class DriveSub extends SubsystemBase {
   private final SlewRateLimiter drivelimit;
   private final Encoder leftEncoder;
   private final Encoder rightEncoder;
+
+  private boolean inverted = false;  
 
   public DriveSub() {
     frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
@@ -60,13 +56,25 @@ public class DriveSub extends SubsystemBase {
   }
 
   public void arcadeDrive(double move, double turn) {
-    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(turn, -move, true);//documentation is backwards
-    System.out.println("turn " + turn);
-    frontLeft.set(wheelSpeeds.left); // set to 0
-    //System.out.println("left " + wheelSpeeds.left + "right" + wheelSpeeds.right);
+    if (getInverted()){
+      move = -move;
+    }
+
+    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);//documentation is backwards
+    frontLeft.set(wheelSpeeds.left);
     frontRight.set(wheelSpeeds.right);
     leftSpeed.setDouble(wheelSpeeds.left);
     rightSpeed.setDouble(wheelSpeeds.right);
+
+    moveEntry.setDouble(move);
+  }
+
+  public boolean getInverted(){
+    return inverted;
+  }
+
+  public void setInverted(boolean value){
+    inverted = value;
   }
 
   public double getLeftDistance() {
@@ -91,15 +99,9 @@ public class DriveSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // leftDistance.setDouble(getLeftDistance());
-    // rightDistance.setDouble(getRightDistance());
     leftSpeed.setDouble(getLeftSpeed());
     rightSpeed.setDouble(getRightSpeed());
 
-    // right1Temp.setDouble(frontRight.getTemperature());
-    // right2Temp.setDouble(backRight.getTemperature());
-    // left1Temp.setDouble(frontLeft.getTemperature());
-    // left2Temp.setDouble(backLeft.getTemperature());
   }
 
 }
