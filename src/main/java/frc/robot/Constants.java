@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 public final class Constants {
 
   public static class DrivetrainConstants {
-
     // Motors
     public static final int DRIVE_FRONT_LEFT_ID = 4; //BACK
     public static final int DRIVE_BACK_LEFT_ID = 1; //FRONT
@@ -24,7 +23,6 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-
     // Motors
     public static final int INTAKE_MOTOR_ID = 5;
     public static final int INTAKE_ACTUATE_MOTOR_ID = 6;
@@ -36,6 +34,19 @@ public final class Constants {
     public static final int INTAKE_ACTUATE_ENCODER_B = 7;
     public static final int INTAKE_LIMIT_SWITCH_TOP = 8;
     public static final int INTAKE_LIMIT_SWITCH_BOTTOM = 9;
+
+  }
+
+  public static class ShooterConstants {
+    //Motors
+    public static final int SHOOTER_MOTOR_ID = 7;
+    public static final int SHOOTER_ACTUATE_MOTOR_ID = 8;
+
+    //Encoders
+    public static final int SHOOTER_ENCODER_A = 10;
+    public static final int SHOOTER_ENCODER_B = 11;
+    public static final int SHOOTER_LIMIT_SWITCH_TOP = 12;
+    public static final int SHOOTER_LIMIT_SWITCH_BOTTOM = 13;
 
   }
 

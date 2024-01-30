@@ -17,8 +17,6 @@ public class IntakeSub extends SubsystemBase {
     Up, Down
   }
 
-  // net work table of toggles and all
-
   private final WPI_VictorSPX intakeMotor;
   private final WPI_VictorSPX intakeActuateMotor;
   private final Encoder actuateEncoder;
@@ -28,8 +26,8 @@ public class IntakeSub extends SubsystemBase {
 
   public IntakeSub() {
     intakeMotor = new WPI_VictorSPX(Constants.IntakeConstants.INTAKE_MOTOR_ID);
-    intakeActuateMotor = new WPI_VictorSPX(Constants.IntakeConstants.ACTUATE_MOTOR_ID);
-    actuateEncoder = new Encoder(Constants.IntakeConstants.ACTUATE_ENCODER_A, Constants.IntakeConstants.ACTUATE_ENCODER_B);
+    intakeActuateMotor = new WPI_VictorSPX(Constants.IntakeConstants.INTAKE_ACTUATE_MOTOR_ID);
+    actuateEncoder = new Encoder(Constants.IntakeConstants.INTAKE_ACTUATE_ENCODER_A, Constants.IntakeConstants.INTAKE_ACTUATE_ENCODER_B);
     moveLimit = new SlewRateLimiter(0);
     limitSwitchTop = new DigitalInput(Constants.IntakeConstants.INTAKE_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.IntakeConstants.INTAKE_LIMIT_SWITCH_BOTTOM);
@@ -41,7 +39,7 @@ public class IntakeSub extends SubsystemBase {
     intakeMotor.set(speed);
   }
 
-  public void runActuate(double speed) {
+  public void runIntakeActuate(double speed) {
 
     if (limitSwitchTop.get()) {
       speed = Math.min(speed, 0);
@@ -62,7 +60,9 @@ public class IntakeSub extends SubsystemBase {
     return limitSwitchBottom.get();
   }
 
-  public double getDistance() {
-    return actuateEncoder.getDistance();
-  }
+  // public double getDistance() {
+  //   return actuateEncoder.getDistance();
+  // }
+
+  //never used ^
 }
