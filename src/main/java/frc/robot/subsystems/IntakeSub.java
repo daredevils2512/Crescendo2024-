@@ -21,7 +21,6 @@ public class IntakeSub extends SubsystemBase {
 
   private final WPI_VictorSPX intakeMotor;
   private final WPI_VictorSPX actuateMotor;
-  private final Encoder intakeEncoder;
   private final Encoder actuateEncoder;
   private final SlewRateLimiter moveLimit;
   private final DigitalInput limitSwitchTop;
@@ -30,12 +29,11 @@ public class IntakeSub extends SubsystemBase {
   public IntakeSub() {
     intakeMotor = new WPI_VictorSPX(Constants.IntakeConstants.INTAKE_MOTOR_ID);
     actuateMotor = new WPI_VictorSPX(Constants.IntakeConstants.ACTUATE_MOTOR_ID);
-    intakeEncoder = new Encoder(Constants.IntakeConstants.INTAKE_ENCODER_A, Constants.IntakeConstants.INTAKE_ENCODER_B);
-    actuateEncoder = new Encoder(Constants.IntakeConstants.ACTUATE_ENCODER_A,
-        Constants.IntakeConstants.ACTUATE_ENCODER_B);
+    actuateEncoder = new Encoder(Constants.IntakeConstants.ACTUATE_ENCODER_A, Constants.IntakeConstants.ACTUATE_ENCODER_B);
     moveLimit = new SlewRateLimiter(0);
     limitSwitchTop = new DigitalInput(Constants.IntakeConstants.INTAKE_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.IntakeConstants.INTAKE_LIMIT_SWITCH_BOTTOM);
+    actuateEncoder.setDistancePerPulse(1);
 
   }
 
@@ -62,5 +60,9 @@ public class IntakeSub extends SubsystemBase {
   
   public boolean isAtBottom(){
     return limitSwitchBottom.get();
+  }
+
+  public double getDistance() {
+    return actuateEncoder.getDistance();
   }
 }

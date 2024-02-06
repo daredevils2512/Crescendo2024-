@@ -30,5 +30,4 @@ public class IntakeCommands {
     return new ConditionalCommand(setActuateDown(intakeSub), setActuateUp(intakeSub), () -> intakeSub.isAtTop());
   }
 
-
 }
