@@ -5,8 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import frc.robot.Constants;
 
@@ -47,7 +45,7 @@ public class ShooterSub extends SubsystemBase {
   public boolean isAtTop() {
     return limitSwitchTop.get();
   }
-
+                                          //both not used
   public boolean isAtBottom() {
     return limitSwitchBottom.get();
   }

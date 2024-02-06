@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSub extends SubsystemBase {
   private final WPI_VictorSPX climberMotor;
@@ -17,9 +16,6 @@ public class ClimberSub extends SubsystemBase {
     limitSwitchTop = new DigitalInput(Constants.ClimberConstants.CLIMBER_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.ClimberConstants.CLIMBER_LIMIT_SWITCH_BOTTOM);
   }
-
-  // public void runClimber(double speed) {
-  // climberMotor.set(speed);
 
   public void runClimber(double speed) {
 
@@ -33,12 +29,11 @@ public class ClimberSub extends SubsystemBase {
     climberMotor.set(speed);
   }
 
+  public boolean isAtTop() {
+    return limitSwitchTop.get();
+  }
+
+  public boolean isAtBottom() {
+    return limitSwitchBottom.get();
+  }
 }
-
-// public boolean isAtTop() {
-// return limitSwitchTop.get();
-// }
-
-// public boolean isAtBottom() {
-// return limitSwitchBottom.get();
-// }
