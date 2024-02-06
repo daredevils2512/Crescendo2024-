@@ -8,8 +8,12 @@ import frc.robot.subsystems.ShooterSub;
 
 public class ShooterCommands {
 
-  public static Command runShooter(ShooterSub shooterSub, double speed) {
+  public static Command runShooterOut(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
+  }
+  
+  public static Command runShooterIn(ShooterSub shooterSub, double speed) {
+    return shooterSub.run(() -> shooterSub.runShooter(-speed)).finallyDo(() -> shooterSub.runShooter(0));
   }
 
   public static Command runTimedShooter(ShooterSub shooterSub, double speed, double time) {

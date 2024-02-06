@@ -23,7 +23,6 @@ public class ShooterSub extends SubsystemBase {
     shooterMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
     shooterActuateMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_ACTUATE_MOTOR_ID);
 
-    //pneumatics = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, );
     limitSwitchTop = new DigitalInput(Constants.ShooterConstants.SHOOTER_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.ShooterConstants.SHOOTER_LIMIT_SWITCH_BOTTOM);
     shooterEncoder = new Encoder(Constants.ShooterConstants.SHOOTER_ENCODER_A, Constants.ShooterConstants.SHOOTER_ENCODER_B);

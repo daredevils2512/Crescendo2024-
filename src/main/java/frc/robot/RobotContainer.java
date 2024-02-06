@@ -44,8 +44,9 @@ public class RobotContainer {
 
     // xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 1));
 
-    // extreme.trigger.whileTrue(ShooterCommands.runShooter(shooterSub, 1));
-    // extreme.sideButton.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1, 2));
+    // extreme.trigger.whileTrue(ShooterCommands.runShooterOut(shooterSub, 1));
+    // extreme.sideButton.whileTrue(ShooterCommands.runShooterIn(shooterSub, -1));
+    // extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1, 2)); // not needed
 
     // extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10));
 
