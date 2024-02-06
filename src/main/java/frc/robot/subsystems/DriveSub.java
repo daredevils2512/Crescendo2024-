@@ -19,7 +19,10 @@ public class DriveSub extends SubsystemBase {
   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
   private final NetworkTableEntry leftSpeed = networkTable.getEntry("left speed");
   private final NetworkTableEntry rightSpeed = networkTable.getEntry("right speed");
-  private final NetworkTableEntry moveEntry = networkTable.getEntry("move");
+  // private final NetworkTableEntry moveEntry = networkTable.getEntry("move");
+  private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
+  private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
+
 
   private final CANSparkMax frontLeft;
   private final CANSparkMax frontRight;
@@ -30,7 +33,7 @@ public class DriveSub extends SubsystemBase {
   private final Encoder leftEncoder;
   private final Encoder rightEncoder;
 
-  private boolean inverted = false;  
+  private boolean inverted = false;
 
   public DriveSub() {
     frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
@@ -47,62 +50,63 @@ public class DriveSub extends SubsystemBase {
 
     drivelimit = new SlewRateLimiter(0);
 
-    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);
-    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A, Constants.DrivetrainConstants.RIGHT_ENCODER_B);
+    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A,
+        Constants.DrivetrainConstants.LEFT_ENCODER_B);
+    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A,
+        Constants.DrivetrainConstants.RIGHT_ENCODER_B);
 
     leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
 
     backLeft.follow(frontLeft, false);
-    backRight.follow(frontRight, true);
+    backRight.follow(frontRight, false);
   }
 
   public void arcadeDrive(double move, double turn) {
-    if (getInverted()){
+    if (getInverted()) {
       move = -move;
     }
 
-    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);//documentation is backwards
+    WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true);// documentation is backwards
     frontLeft.set(wheelSpeeds.left);
     frontRight.set(wheelSpeeds.right);
     leftSpeed.setDouble(wheelSpeeds.left);
     rightSpeed.setDouble(wheelSpeeds.right);
 
-    moveEntry.setDouble(move);
+    // // moveEntry.setDouble(move);
   }
 
-  public boolean getInverted(){
+  public boolean getInverted() {
     return inverted;
   }
 
-  public void setInverted(boolean value){
+  public void setInverted(boolean value) {
     inverted = value;
   }
+  
 
   public double getLeftDistance() {
-    return leftEncoder.getDistance();
+    return frontRight.getEncoder().getPosition();
   }
 
   public double getRightDistance() {
-    return rightEncoder.getDistance();
+    return frontLeft.getEncoder().getPosition();
   }
 
-  public double getLeftSpeed() {
-    return leftEncoder.getRate();
-  }
+  // public double getLeftSpeed() {
+  //   return leftEncoder.getRate();
+  // }
 
-  public double getRightSpeed() {
-    return rightEncoder.getRate();
-  }
-
-  public double getDistance() {
-    return (getLeftDistance() + getRightDistance()) / 2;
-  }
+  // public double getRightSpeed() {
+  //   return rightEncoder.getRate();
+  // }
 
   @Override
   public void periodic() {
-    leftSpeed.setDouble(getLeftSpeed());
-    rightSpeed.setDouble(getRightSpeed());
+    leftDistance.setDouble(getLeftDistance());
+    rightDistance.setDouble(getRightDistance());
+    // leftSpeed.setDouble(getLeftSpeed());
+    // rightSpeed.setDouble(getRightSpeed());
 
   }
 
