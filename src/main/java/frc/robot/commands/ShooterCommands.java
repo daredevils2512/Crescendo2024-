@@ -1,9 +1,6 @@
 package frc.robot.commands;
 
-import javax.sound.midi.Transmitter;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.ShooterSub;
 
 public class ShooterCommands {
@@ -20,11 +17,11 @@ public class ShooterCommands {
     return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).finallyDo(() -> shooterSub.runShooterActuate(0));
   }
   
-  public static Command setShooterUp(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(speed));
-  }
+  // public static Command setShooterUp(ShooterSub shooterSub, double speed) {
+  //   return shooterSub.run(() -> shooterSub.runShooterActuate(speed));
+  // }
 
-  public static Command setShooterDown(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(-speed));
-  }
+  // public static Command setShooterDown(ShooterSub shooterSub, double speed) {
+  //   return shooterSub.run(() -> shooterSub.runShooterActuate(-speed));
+  // }
 }
