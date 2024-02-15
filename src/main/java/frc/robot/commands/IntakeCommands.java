@@ -8,5 +8,4 @@ public class IntakeCommands {
   public static Command runIntake(IntakeSub intakeSub, double speed) {
     return intakeSub.run(() -> intakeSub.runIntake(speed)).finallyDo(() -> intakeSub.runIntake(0));
   }
-
 }

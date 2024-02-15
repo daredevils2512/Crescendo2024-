@@ -13,16 +13,18 @@ import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.PIDTest;
 import frc.robot.subsystems.ShooterSub;
-
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
-  private final DriveSub driveSub = new DriveSub();
+   private final DriveSub driveSub = new DriveSub();
   private final IntakeSub intakeSub = new IntakeSub();
-  private final ShooterSub shooterSub = new ShooterSub();
-  private final ClimberSub climberSub = new ClimberSub();
+  // private final ShooterSub shooterSub = new ShooterSub();
+  // private final ClimberSub climberSub = new ClimberSub();
   private final Extreme extreme = new Extreme(1); // constants??
   private final CommandXboxController xbox = new CommandXboxController(IoConstants.XBOX_CONTROLLER_PORT);
 
@@ -30,40 +32,61 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    UsbCamera intakeCamera = CameraServer.startAutomaticCapture(1);
+    intakeCamera.setResolution(640,480);
+    UsbCamera shooterCamera = CameraServer.startAutomaticCapture(2);
+    shooterCamera.setResolution(640,480);
+
+    // MjpegServer server = new MjpegServer(null, 14);
+    // server.setSource(intakeCamera);
+    CameraServer.getServer();
+
+    // if (leftBumper.false) {
+    //   intakeCamera.getVideoMode;
+    // }else (leftBumper.true) {
+    //   shooterCamera.getVideoMode();
+    // }
+
+    // if (driveSub.arcadeDrive(move, -turn)){
+    //   set.intakeCamera;
+    // } else (driveSub.arcadeDrive(-move, turn)){
+    //   get.shooterCamera;
+    // }
 
   }
 
   private void configureBindings() {
 
     // Drivetrain
-    driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
+    //driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
     xbox.leftBumper().onTrue(DriveCommands.toggleInverted(driveSub));
-    xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));  //pid starts here
-    pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
-    extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10));
+    // xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));  //pid starts here
+    // pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
+    // extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10));
 
     // Intake 
-    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 1));
+    intakeSub.setDefaultCommand(intakeSub.run(()-> intakeSub.runIntake(-xbox.getLeftY())));
+    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 0.5));
 
-    // Shooter
-    shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(extreme.getStickY())));
-    extreme.trigger.whileTrue(ShooterCommands.runShooterOut(shooterSub, 1)); //shoot
-    extreme.sideButton.whileTrue(ShooterCommands.runShooterIn(shooterSub, -1)); //intake to shooter
-    extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1, 2)); //timed intake from shooter
+    // //Shooter
+    // shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(extreme.getStickY())));
+    // extreme.trigger.whileTrue(ShooterCommands.runShooterOut(shooterSub, 1)); //shoot
+    // extreme.sideButton.whileTrue(ShooterCommands.runShooterIn(shooterSub, -1)); //intake to shooter
+    // extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1, 2)); //timed intake from shooter
 
-    // Climber
-    extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberUp(climberSub, 0.5));
-    extreme.joystickTopLeft.whileTrue(ClimberCommands.runClimberUp(climberSub, -0.5));
+    // // Climber
+    // extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberUp(climberSub, 0.5));
+    // extreme.joystickTopLeft.whileTrue(ClimberCommands.runClimberUp(climberSub, -0.5));
   }
 
-  public Command autonomousCommand() {
-    return AutoCommands.autoDriveAndTurn(driveSub, 0.5, 1) //theoretically be at amp
-    //return AutoCommands.AutoDriveForward(driveSub, 0.5, 1)
-    //.andThen(AutoCommands.AutoDriveLeft(driveSub, 0.5, 1)) 
-        .andThen(ShooterCommands.runShooterOut(shooterSub, 1)).withTimeout(1) //shoot in amp
-        .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
-        .andThen(IntakeCommands.runIntake(intakeSub, 1)).withTimeout(1); // intake another ring
-  }
+  // public Command autonomousCommand() {
+  //   return AutoCommands.autoDriveAndTurn(driveSub, 0.5, 1) //theoretically be at amp
+  //   //return AutoCommands.AutoDriveForward(driveSub, 0.5, 1)
+  //   //.andThen(AutoCommands.AutoDriveLeft(driveSub, 0.5, 1)) 
+  //       .andThen(ShooterCommands.runShooterOut(shooterSub, 1)).withTimeout(1) //shoot in amp
+  //       .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
+  //       .andThen(IntakeCommands.runIntake(intakeSub, 1)).withTimeout(1); // intake another ring
+  // }
 }
 
 

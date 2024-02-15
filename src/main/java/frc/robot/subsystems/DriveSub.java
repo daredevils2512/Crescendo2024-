@@ -49,10 +49,8 @@ public class DriveSub extends SubsystemBase {
 
     drivelimit = new SlewRateLimiter(0);
 
-    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A,
-        Constants.DrivetrainConstants.LEFT_ENCODER_B);
-    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A,
-        Constants.DrivetrainConstants.RIGHT_ENCODER_B);
+    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);
+    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A, Constants.DrivetrainConstants.RIGHT_ENCODER_B);
 
     leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
