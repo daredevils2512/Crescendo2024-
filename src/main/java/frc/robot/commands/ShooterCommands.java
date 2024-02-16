@@ -27,4 +27,6 @@ public class ShooterCommands {
   public static Command setShooterDown(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooterActuate(-speed));
   }
+
+  private ShooterCommands() {}
 }
