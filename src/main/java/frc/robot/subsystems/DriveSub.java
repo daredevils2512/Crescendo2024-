@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -11,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -23,7 +21,6 @@ public class DriveSub extends SubsystemBase {
   // private final NetworkTableEntry moveEntry = networkTable.getEntry("move");
   private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
   private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
-
 
   private final CANSparkMax frontLeft;
   private final CANSparkMax frontRight;
@@ -49,12 +46,10 @@ public class DriveSub extends SubsystemBase {
 
     frontRight.setInverted(true);
 
-    drivelimit = new SlewRateLimiter(0);
+    drivelimit = new SlewRateLimiter(5);
 
-    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A,
-        Constants.DrivetrainConstants.LEFT_ENCODER_B);
-    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A,
-        Constants.DrivetrainConstants.RIGHT_ENCODER_B);
+    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);
+    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A, Constants.DrivetrainConstants.RIGHT_ENCODER_B);
 
     leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
     rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
@@ -84,7 +79,6 @@ public class DriveSub extends SubsystemBase {
   public void setInverted(boolean value) {
     inverted = value;
   }
-  
 
   public double getLeftDistance() {
     return frontRight.getEncoder().getPosition();
@@ -95,11 +89,11 @@ public class DriveSub extends SubsystemBase {
   }
 
   // public double getLeftSpeed() {
-  //   return leftEncoder.getRate();
+  // return leftEncoder.getRate();
   // }
 
   // public double getRightSpeed() {
-  //   return rightEncoder.getRate();
+  // return rightEncoder.getRate();
   // }
 
   @Override

@@ -12,15 +12,9 @@ import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.PIDTest;
 import frc.robot.subsystems.ShooterSub;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   private final DriveSub driveSub = new DriveSub();
@@ -33,7 +27,6 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
-
   }
 
   private void configureBindings() {
@@ -58,13 +51,13 @@ public class RobotContainer {
     return AutoCommands.autoDriveAndTurn(driveSub, 0.5, 1) //theoretically be at amp
     //return AutoCommands.AutoDriveForward(driveSub, 0.5, 1)
     //.andThen(AutoCommands.AutoDriveLeft(driveSub, 0.5, 1)) 
-        .andThen(ShooterCommands.runShooter(shooterSub, 1)).withTimeout(1) //shoot in amp
-        .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
-        .andThen(IntakeCommands.runIntake(intakeSub, 1)).withTimeout(1); // intake another ring
+      .andThen(ShooterCommands.runShooterActuate(shooterSub, 0.5))
+      .andThen(ShooterCommands.runShooter(shooterSub, 1)).withTimeout(1) //shoot in amp
+      .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
+      .andThen(ShooterCommands.runShooterActuate(shooterSub, -0.5))
+      .andThen(IntakeCommands.runIntake(intakeSub, 1).alongWith(ShooterCommands.runShooter(shooterSub, 0.3))).withTimeout(1); // intake another ring .. could make the intake and shooter one function
   }
 }
-
-
 
 // beware the watermelon man
 // how bad can the watermelon man possibly be?
