@@ -15,7 +15,7 @@ public final class Constants {
     // Encoders
     public static final int LEFT_ENCODER_A = 0;
     public static final int LEFT_ENCODER_B = 1;
-    public static final int RIGHT_ENCODER_A = 10; //2
+    public static final int RIGHT_ENCODER_A = 2; //10 for test
     public static final int RIGHT_ENCODER_B = 3;
     public static final double PULSES_PER_ROTATIONS = 256; // might be wrong
     public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI;

@@ -1,13 +1,13 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class MotorTest {
     
-  private final WPI_VictorSPX motor;
+  private final WPI_TalonSRX motor;
   
   public MotorTest() {
-    motor = new WPI_VictorSPX(9);
+    motor = new WPI_TalonSRX(9);
   }
 
   public void runIntake(double speed) {

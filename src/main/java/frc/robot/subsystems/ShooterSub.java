@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,8 +16,8 @@ import frc.robot.Constants;
 
 public class ShooterSub extends SubsystemBase {
 
-  private final WPI_VictorSPX shooterMotor;
-  private final WPI_VictorSPX shooterActuateMotor;
+  private final WPI_TalonSRX shooterMotor;
+  private final WPI_TalonSRX shooterActuateMotor;
  // private final DoubleSolenoid pneumatics;
   private final DigitalInput limitSwitchTop;
   private final DigitalInput limitSwitchBottom;
@@ -25,8 +26,9 @@ public class ShooterSub extends SubsystemBase {
   private final NetworkTableEntry shooterLength = networkTable.getEntry("Shooter length: ");
 
   public ShooterSub() {
-    shooterMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
-    shooterActuateMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_ACTUATE_MOTOR_ID);
+    shooterMotor = new WPI_TalonSRX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
+    shooterActuateMotor = new WPI_TalonSRX(Constants.ShooterConstants.SHOOTER_ACTUATE_MOTOR_ID);
+    shooterActuateMotor.setNeutralMode(NeutralMode.Brake);
 
     //pneumatics = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, );
     limitSwitchTop = new DigitalInput(Constants.ShooterConstants.SHOOTER_LIMIT_SWITCH_TOP);
@@ -41,24 +43,25 @@ public class ShooterSub extends SubsystemBase {
   }
 
   public void runShooterActuate(double speed) {
-//make 3 different points shooting(all the way up), hand off(middle), resting(all the way down)
-    if (limitSwitchTop.get()) {
-      speed = Math.min(speed, 0);
-    }
-    if (limitSwitchBottom.get()) {
-      speed = Math.max(speed, 0);
-    }
+    // // make 3 different points shooting(all the way up), hand off(middle), resting(all the way down)
+    // if (limitSwitchTop.get()) {
+    //   speed = Math.min(speed, 0);
+    // }
+    // if (limitSwitchBottom.get()) {
+    //   speed = Math.max(speed, 0);
+    // }
+    // // keep limit switches commented till theyre on the robot
 
     shooterActuateMotor.set(speed);
   }
 
-  public boolean isAtTop() {
-    return limitSwitchTop.get();
-  }
+  // public boolean isAtTop() {
+  //   return limitSwitchTop.get();
+  // }
 
-  public boolean isAtBottom() {
-    return limitSwitchBottom.get();
-  }
+  // public boolean isAtBottom() {
+  //   return limitSwitchBottom.get();
+  // } 
   
   public double getShooterLength() {
     return shooterEncoder.getDistance();
@@ -70,3 +73,6 @@ public class ShooterSub extends SubsystemBase {
   }
 
 }
+
+
+//two diff subs for actuate and shoot
