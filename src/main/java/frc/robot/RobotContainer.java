@@ -34,20 +34,17 @@ public class RobotContainer {
     // Drivetrain
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
     xbox.leftBumper().onTrue(DriveCommands.toggleInverted(driveSub));
-    extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10)); //pid things start here
-    xbox.a().whileTrue(pid.run(() -> pid.setTargetPosition(10)));
-    pid.setDefaultCommand(pid.run(() -> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
+    extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10)); //PID
+    xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));
+    pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
 
     // Intake
     xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 1));
 
     // Shooter
     shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(extreme.getStickY())));
-    extreme.trigger.whileTrue(ShooterCommands.runShooter(shooterSub, 1));
-    extreme.sideButton.onTrue(ShooterCommands.runTimedShooter(shooterSub, 0.3, 2));
-
-    xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));
-    pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
+    extreme.trigger.whileTrue(ShooterCommands.runShooter(shooterSub, 0.5));
+    extreme.sideButton.onTrue(ShooterCommands.runTimedShooter(shooterSub, 0.5, 2));
   }
 
   public Command autonomousCommand() {

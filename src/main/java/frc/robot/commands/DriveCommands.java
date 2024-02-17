@@ -6,11 +6,14 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSub;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class DriveCommands extends Command {
 
 public static Command toggleInverted(DriveSub driveSub){
-  return driveSub.runOnce(()-> driveSub.setInverted(!driveSub.getInverted()));
+  // return driveSub.runOnce(()-> driveSub.setInverted(!driveSub.getInverted()));
+  return new InstantCommand(() -> driveSub.setInverted(false), driveSub);
 }
 
 }
