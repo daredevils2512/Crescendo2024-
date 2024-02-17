@@ -30,16 +30,16 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
+    
     // Drivetrain
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
     xbox.leftBumper().onTrue(DriveCommands.toggleInverted(driveSub));
-    extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10));
+    extreme.baseBackLeft.onTrue(new DriveForwardCommand(driveSub, 10)); //pid things start here
+    xbox.a().whileTrue(pid.run(() -> pid.setTargetPosition(10)));
+    pid.setDefaultCommand(pid.run(() -> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
 
     // Intake
-    xbox.rightTrigger().whileTrue(IntakeCommands.runIntake(intakeSub, -1)); //in
-    xbox.leftTrigger().whileTrue(IntakeCommands.runIntake(intakeSub, 1)); //out
-    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 1).alongWith(ShooterCommands.runShooter(shooterSub, 0.3))); //might be able to just run intake if its powerful enough
+    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 1));
 
     // Shooter
     shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(extreme.getStickY())));
@@ -61,8 +61,6 @@ public class RobotContainer {
       .andThen(IntakeCommands.runIntake(intakeSub, 1).alongWith(ShooterCommands.runShooter(shooterSub, 0.3))).withTimeout(1); // intake another ring .. could make the intake and shooter one function
   }
 }
-
-
 
 // beware the watermelon man
 // how bad can the watermelon man possibly be?
