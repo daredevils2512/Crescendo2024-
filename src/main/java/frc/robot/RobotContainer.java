@@ -17,6 +17,7 @@ import frc.robot.subsystems.ShooterSub.Position;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -78,10 +79,8 @@ public class RobotContainer {
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
     xbox.leftBumper().onTrue(DriveCommands.toggleInverted(driveSub));
 
-    // xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10))); //pid starts
-    // here
-    // pid.setDefaultCommand(pid.run(()->
-    // pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
+    // xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));
+    // pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
     // extreme.baseBackRight.onTrue(new DriveForwardCommand(driveSub, 10));
 
     // Intake
@@ -95,9 +94,6 @@ public class RobotContainer {
     extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Top, 0.6));
     extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Handoff, 0.6));
     extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Bottom, 0.6));
-
-    // extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1,
-    // 2)); //timed intake from shooter
 
     // Climber
     extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberUp(climberSub, 0.5));

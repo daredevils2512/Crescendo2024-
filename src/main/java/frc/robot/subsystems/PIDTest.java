@@ -18,8 +18,8 @@ public class PIDTest extends SubsystemBase {
   private final PIDController pid;
 
   public PIDTest() {
-    pid = new PIDController(0.1, 0.0, 0);
-    motor = new CANSparkMax(30, MotorType.kBrushless);     // ID 30
+    pid = new PIDController(0.1, 0.05, 0);
+    motor = new CANSparkMax(34, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
   }
 

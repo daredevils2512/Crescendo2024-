@@ -4,6 +4,8 @@ import java.security.cert.PKIXReason;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ShooterSub.Position;
 
@@ -33,9 +35,6 @@ public static Command runShooter(ShooterSub shooterSub, double speed) {
   public static Command setPosition(ShooterSub shooterSub, Position position, double speed) {
     return shooterSub.run(() -> shooterSub.setPosition(position, speed));
   }
-
-
-  
 
   public static Command setShooterUp(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooterActuate(speed));

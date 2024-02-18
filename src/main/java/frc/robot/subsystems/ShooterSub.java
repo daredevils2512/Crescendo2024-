@@ -1,12 +1,16 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,20 +19,18 @@ import frc.robot.Constants;
 
 public class ShooterSub extends SubsystemBase {
 
-  private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
-  private final NetworkTableEntry actauteEntry = networkTable.getEntry("actuate encoder: ");
-  private final WPI_VictorSPX shooterMotor;
-  private final WPI_VictorSPX shooterActuateMotor;
-  // private final DoubleSolenoid pneumatics;
+  private final WPI_TalonSRX shooterMotor;
+  private final WPI_TalonSRX shooterActuateMotor;
   private final DigitalInput limitSwitchTop;
   private final DigitalInput limitSwitchBottom;
   private final Encoder actuateEncoder;
-  // private final PIDController pid;
+  private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
+  private final NetworkTableEntry shooterLength = networkTable.getEntry("Shooter length: ");
 
   public ShooterSub() {
-
-    shooterMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
-    shooterActuateMotor = new WPI_VictorSPX(Constants.ShooterConstants.SHOOTER_ACTUATE_MOTOR_ID);
+    shooterMotor = new WPI_TalonSRX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
+    shooterActuateMotor = new WPI_TalonSRX(Constants.ShooterConstants.SHOOTER_ACTUATE_MOTOR_ID);
+    shooterActuateMotor.setNeutralMode(NeutralMode.Brake);
 
     limitSwitchTop = new DigitalInput(Constants.ShooterConstants.SHOOTER_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.ShooterConstants.SHOOTER_LIMIT_SWITCH_BOTTOM);
@@ -42,13 +44,12 @@ public class ShooterSub extends SubsystemBase {
   }
 
   public void runShooterActuate(double speed) {
-
-    if (limitSwitchTop.get()) {
-      speed = Math.min(speed, 0);
-    }
-    if (limitSwitchBottom.get()) {
-      speed = Math.max(speed, 0);
-    }
+    // if (limitSwitchTop.get()) {
+    //   speed = Math.min(speed, 0);
+    // }
+    // if (limitSwitchBottom.get()) {
+    //   speed = Math.max(speed, 0);
+    // }
 
     shooterActuateMotor.set(speed);
   }
@@ -64,7 +65,6 @@ public class ShooterSub extends SubsystemBase {
         break;
 
       case Handoff: 
-      // pid.calculate(speed);
       if (getDistance() > Constants.ShooterConstants.ENCODER_POSITION + Constants.ShooterConstants.TOLERANCE){      //change encoder position
           runShooterActuate(-speed);
       } else if (getDistance() < Constants.ShooterConstants.ENCODER_POSITION - Constants.ShooterConstants.TOLERANCE){
@@ -80,13 +80,13 @@ public class ShooterSub extends SubsystemBase {
     }
   }
 
-  public boolean isAtTop() {
-    return limitSwitchTop.get();
-  }
+  // public boolean isAtTop() {
+  //   return limitSwitchTop.get();
+  // }
 
-  public boolean isAtBottom() {
-    return limitSwitchBottom.get();
-  }
+  // public boolean isAtBottom() {
+  //   return limitSwitchBottom.get();
+  // }
 
   public double getDistance() {
     return actuateEncoder.getDistance();
@@ -94,10 +94,10 @@ public class ShooterSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (isAtBottom()) {
-      actuateEncoder.reset();
-    }
+  //   if (isAtBottom()) {
+  //     actuateEncoder.reset();
+  //   }
+    shooterLength.setDouble(getDistance());
 
-    actauteEntry.setDouble(getDistance());
   }
 }
