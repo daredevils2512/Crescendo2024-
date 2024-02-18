@@ -16,8 +16,6 @@ import frc.robot.Constants;
 public class DriveSub extends SubsystemBase {
 
   private final NetworkTable networkTable = NetworkTableInstance.getDefault().getTable(getName());
-  private final NetworkTableEntry leftSpeed = networkTable.getEntry("left speed");
-  private final NetworkTableEntry rightSpeed = networkTable.getEntry("right speed");
   // private final NetworkTableEntry moveEntry = networkTable.getEntry("move");
   private final NetworkTableEntry leftDistance = networkTable.getEntry("left distance");
   private final NetworkTableEntry rightDistance = networkTable.getEntry("right distance");
@@ -66,8 +64,6 @@ public class DriveSub extends SubsystemBase {
     WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true); // documentation is backwards
     frontLeft.set(wheelSpeeds.left);
     frontRight.set(wheelSpeeds.right);
-    leftSpeed.setDouble(wheelSpeeds.left);
-    rightSpeed.setDouble(wheelSpeeds.right);
 
     // // moveEntry.setDouble(move);
   }
@@ -88,21 +84,10 @@ public class DriveSub extends SubsystemBase {
     return frontLeft.getEncoder().getPosition();
   }
 
-  // public double getLeftSpeed() {
-  // return leftEncoder.getRate();
-  // }
-
-  // public double getRightSpeed() {
-  // return rightEncoder.getRate();
-  // }
-
   @Override
   public void periodic() {
     leftDistance.setDouble(getLeftDistance());
     rightDistance.setDouble(getRightDistance());
-    // leftSpeed.setDouble(getLeftSpeed());
-    // rightSpeed.setDouble(getRightSpeed());
-
   }
 
 }

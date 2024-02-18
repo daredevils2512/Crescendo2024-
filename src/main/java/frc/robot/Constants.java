@@ -17,37 +17,45 @@ public final class Constants {
     public static final int LEFT_ENCODER_B = 1;
     public static final int RIGHT_ENCODER_A = 2; //10 for test
     public static final int RIGHT_ENCODER_B = 3;
-    public static final double PULSES_PER_ROTATIONS = 256; // might be wrong
-    public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI;
-    public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE / PULSES_PER_ROTATIONS;
+    public static final double PULSES_PER_ROTATIONS = 256;
+    public static final double WHEEL_CIRCUMFERENCE = 6* Math.PI;
+    public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE/PULSES_PER_ROTATIONS;
   }
 
   public static class IntakeConstants {
     // Motors
     public static final int INTAKE_MOTOR_ID = 5;
-    public static final int INTAKE_ACTUATE_MOTOR_ID = 6;
 
     // Encoders
     public static final int INTAKE_ENCODER_A = 4;
     public static final int INTAKE_ENCODER_B = 5;
-    public static final int INTAKE_ACTUATE_ENCODER_A = 6;
-    public static final int INTAKE_ACTUATE_ENCODER_B = 7;
-    public static final int INTAKE_LIMIT_SWITCH_TOP = 8;
-    public static final int INTAKE_LIMIT_SWITCH_BOTTOM = 9;
+    public static final int INTAKE_LIMIT_SWITCH_TOP = 6;
+    public static final int INTAKE_LIMIT_SWITCH_BOTTOM = 7;
 
   }
 
   public static class ShooterConstants {
     //Motors
-    public static final int SHOOTER_MOTOR_ID = 7;
-    public static final int SHOOTER_ACTUATE_MOTOR_ID = 8;
+    public static final int SHOOTER_MOTOR_ID = 6;
+    public static final int SHOOTER_ACTUATE_MOTOR_ID = 7;
 
     //Encoders
-    public static final int SHOOTER_ENCODER_A = 10;
-    public static final int SHOOTER_ENCODER_B = 11;
-    public static final int SHOOTER_LIMIT_SWITCH_TOP = 12;
-    public static final int SHOOTER_LIMIT_SWITCH_BOTTOM = 13;
+    public static final int SHOOTER_ENCODER_A = 8; 
+    public static final int SHOOTER_ENCODER_B = 9;
+    public static final int SHOOTER_LIMIT_SWITCH_TOP = 10;
+    public static final int SHOOTER_LIMIT_SWITCH_BOTTOM = 11;
+    public static final double ENCODER_POSITION = 2;
+    public static final double TOLERANCE = 0.3;
 
+  }
+
+  public static class ClimberConstants {
+    //Motors
+    public static final int CLIMBER_MOTOR_ID = 8;
+    
+    //Encoders
+    public static final int CLIMBER_LIMIT_SWITCH_TOP = 12;
+    public static final int CLIMBER_LIMIT_SWITCH_BOTTOM = 13;
   }
 
   public static class IoConstants {

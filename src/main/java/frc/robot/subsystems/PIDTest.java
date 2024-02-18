@@ -41,10 +41,11 @@ public class PIDTest extends SubsystemBase {
   public void periodic() {
     encoderPublisher.set(motor.getEncoder().getPosition());
   }
+  
   // public void weebWoob() {
   //   pid.setTolerance(5, 5);
   //   pid.setIntegratorRange(-0.5, 0.5);
   //   pid.atSetpoint();
-    // pid.reset();
+  //   pid.reset();
   // }
 }
