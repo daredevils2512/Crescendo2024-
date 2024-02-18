@@ -40,10 +40,12 @@ public final class Constants {
     public static final int SHOOTER_ACTUATE_MOTOR_ID = 7;
 
     //Encoders
-    public static final int SHOOTER_ENCODER_A = 8;  //do i need these
+    public static final int SHOOTER_ENCODER_A = 8; 
     public static final int SHOOTER_ENCODER_B = 9;
     public static final int SHOOTER_LIMIT_SWITCH_TOP = 10;
     public static final int SHOOTER_LIMIT_SWITCH_BOTTOM = 11;
+    public static final double ENCODER_POSITION = 2;
+    public static final double TOLERANCE = 0.3;
 
   }
 

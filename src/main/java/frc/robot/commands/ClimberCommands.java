@@ -13,9 +13,9 @@ public class ClimberCommands {
     return climberSub.run(() -> climberSub.runClimber(-speed)).finallyDo(() -> climberSub.runClimber(0));
   }
 
-  public static Command runTimedClimber(ClimberSub climberSub, double speed, double time) {
-    return climberSub.run(()-> climberSub.runClimber(speed)).withTimeout(time).finallyDo(() -> climberSub.runClimber(0));
-  }
+  // public static Command runTimedClimber(ClimberSub climberSub, double speed, double time) {
+  //   return climberSub.run(()-> climberSub.runClimber(speed)).withTimeout(time).finallyDo(() -> climberSub.runClimber(0));
+  // }
 
 }
 
