@@ -9,6 +9,10 @@ import frc.robot.subsystems.ShooterSub.Position;
 
 public class ShooterCommands {
 
+public static Command runShooter(ShooterSub shooterSub, double speed) {
+    return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
+  }
+
   public static Command runShooterOut(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
   }
@@ -19,6 +23,11 @@ public class ShooterCommands {
 
   public static Command runShooterActuate(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).finallyDo(() -> shooterSub.runShooterActuate(0));
+  }
+
+  public static Command runTimedShooterActuate(ShooterSub shooterSub, double speed, double time) {
+    return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).withTimeout(time)
+    .finallyDo(() -> shooterSub.runShooterActuate(0));
   }
 
   public static Command setPosition(ShooterSub shooterSub, Position position, double speed) {

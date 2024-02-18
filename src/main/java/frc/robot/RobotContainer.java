@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
-   private final DriveSub driveSub = new DriveSub();
+  private final DriveSub driveSub = new DriveSub();
   private final IntakeSub intakeSub = new IntakeSub();
   private final ShooterSub shooterSub = new ShooterSub();
   private final ClimberSub climberSub = new ClimberSub();
@@ -50,24 +50,24 @@ public class RobotContainer {
     System.out.println("Auto selected: " + autoSelected);
 
     UsbCamera intakeCamera = CameraServer.startAutomaticCapture(1);
-    intakeCamera.setResolution(640,480);
+    intakeCamera.setResolution(640, 480);
     UsbCamera shooterCamera = CameraServer.startAutomaticCapture(2);
-    shooterCamera.setResolution(640,480);
+    shooterCamera.setResolution(640, 480);
 
     // MjpegServer server = new MjpegServer(null, 14);
     // server.setSource(intakeCamera);
     CameraServer.getServer();
 
     // if (leftBumper.false) {
-    //   intakeCamera.getVideoMode;
+    // intakeCamera.getVideoMode;
     // }else (leftBumper.true) {
-    //   shooterCamera.getVideoMode();
+    // shooterCamera.getVideoMode();
     // }
 
     // if (driveSub.arcadeDrive(move, -turn)){
-    //   set.intakeCamera;
+    // set.intakeCamera;
     // } else (driveSub.arcadeDrive(-move, turn)){
-    //   get.shooterCamera;
+    // get.shooterCamera;
     // }
 
   }
@@ -78,63 +78,59 @@ public class RobotContainer {
     driveSub.setDefaultCommand(driveSub.run(() -> driveSub.arcadeDrive(-xbox.getLeftY(), xbox.getLeftX())));
     xbox.leftBumper().onTrue(DriveCommands.toggleInverted(driveSub));
 
-    // xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10)));  //pid starts here
-    // pid.setDefaultCommand(pid.run(()-> pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
+    // xbox.a().whileTrue(pid.run(()-> pid.setTargetPosition(10))); //pid starts
+    // here
+    // pid.setDefaultCommand(pid.run(()->
+    // pid.runPIDMotor(MathUtil.applyDeadband(xbox.getLeftY(), 0.3))));
     // extreme.baseBackRight.onTrue(new DriveForwardCommand(driveSub, 10));
 
-    // Intake 
-    intakeSub.setDefaultCommand(intakeSub.run(()-> intakeSub.runIntake(-xbox.getRightY())));
-    xbox.rightBumper().whileTrue(IntakeCommands.runIntake(intakeSub, 0.5));
+    // Intake
+    xbox.rightBumper().whileTrue(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.5));
+    xbox.rightTrigger().whileTrue(IntakeCommands.runIntake(intakeSub, 0.5));
 
-    //Shooter
+    // Shooter
     shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(extreme.getStickY())));
-    extreme.trigger.whileTrue(ShooterCommands.runShooterOut(shooterSub, 1)); //shoot
-    extreme.sideButton.whileTrue(ShooterCommands.runShooterIn(shooterSub, -1)); //intake to shooter
+    extreme.trigger.whileTrue(ShooterCommands.runShooterOut(shooterSub, 1)); // shoot
+    extreme.sideButton.whileTrue(ShooterCommands.runShooterIn(shooterSub, -1)); // intake to shooter
     extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Top, 0.6));
     extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Handoff, 0.6));
     extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Bottom, 0.6));
 
-    // extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1, 2)); //timed intake from shooter
+    // extreme.baseFrontLeft.onTrue(ShooterCommands.runTimedShooter(shooterSub, 1,
+    // 2)); //timed intake from shooter
 
     // Climber
     extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberUp(climberSub, 0.5));
     extreme.joystickTopLeft.whileTrue(ClimberCommands.runClimberUp(climberSub, -0.5));
   }
 
-   public Command autonomousCommand() {
-
-    switch (autoSelected) {
+  public void autonomousCommand() {
+  switch (autoSelected) {
       case fullAuto:
+        // !!!! please test this before running it, idk if it will break the robot or if it even works
 
+         AutoCommands.autoDriveAndTurn(driveSub, 0.5, 2) // theoretically be at amp
+            // return AutoCommands.AutoDriveForward(driveSub, 0.5, 1) // use this if ^ doesnt work
+            // .andThen(AutoCommands.AutoDriveLeft(driveSub, 0.5, 1))
+            .andThen(ShooterCommands.runTimedShooterActuate(shooterSub, 0.5, 2)) // change time till it gets to the top
+            .andThen(ShooterCommands.runShooter(shooterSub, 1)).withTimeout(1) // shoot in amp
+            .andThen(ShooterCommands.runTimedShooterActuate(shooterSub, -0.5, 2)) // maybe put after moving, might slam into the amp
+            .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
+            .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 1).withTimeout(1.3)); // intake another ring
         break;
 
       case middleAuto:
-        return AutoCommands.autoDriveForward(driveSub, 0.5, 1)
-        .andThen(IntakeCommands.intakeTo);
-
+         AutoCommands.autoDriveForward(driveSub, 0.5, 1);
         break;
 
-      case farAuto:  // make sure this is tuned well so it doesnt slam into the stage
-
-      break;
+      case farAuto: // make sure this is tuned so it doesnt slam into the stage
+        AutoCommands.autoDriveForward(driveSub, 0.5, 1.5);
+        break;
 
       case simpleAuto:
-        return AutoCommands.autoDriveForward(driveSub, 0.5, 2);
-      break;
+      default:
+        AutoCommands.autoDriveForward(driveSub, 0.5, 2);
+        break;
     }
-
-    return AutoCommands.autoDriveAndTurn(driveSub, 0.5, 1) //theoretically be at amp
-    //return AutoCommands.AutoDriveForward(driveSub, 0.5, 1)
-    //.andThen(AutoCommands.AutoDriveLeft(driveSub, 0.5, 1)) 
-      .andThen(ShooterCommands.runShooterActuate(shooterSub, 0.5))
-      .andThen(ShooterCommands.runShooter(shooterSub, 1)).withTimeout(1) //shoot in amp
-      .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.5, 1))
-      .andThen(ShooterCommands.runShooterActuate(shooterSub, -0.5))
-      .andThen(IntakeCommands.runIntake(intakeSub, 1).alongWith(ShooterCommands.runShooter(shooterSub, 0.3))).withTimeout(1); // intake another ring .. could make the intake and shooter one function
   }
 }
-
-
-
-// beware the watermelon man
-// how bad can the watermelon man possibly be?
