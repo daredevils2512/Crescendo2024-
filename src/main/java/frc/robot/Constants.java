@@ -15,7 +15,7 @@ public final class Constants {
     // Encoders
     public static final int LEFT_ENCODER_A = 0;
     public static final int LEFT_ENCODER_B = 1;
-    public static final int RIGHT_ENCODER_A = 2; //10 for test
+    public static final int RIGHT_ENCODER_A = 2; 
     public static final int RIGHT_ENCODER_B = 3;
     public static final double PULSES_PER_ROTATIONS = 256;
     public static final double WHEEL_CIRCUMFERENCE = 6* Math.PI;
@@ -52,6 +52,7 @@ public final class Constants {
   public static class ClimberConstants {
     //Motors
     public static final int CLIMBER_MOTOR_ID = 8;
+    public static final int CLIMBER_MOTOR2_ID = 9;
     
     //Encoders
     public static final int CLIMBER_LIMIT_SWITCH_TOP = 12;
