@@ -8,10 +8,12 @@ public class DriveForwardCommand extends Command {
   private double initialLeft;
   private double initialRight;
   private double driveTarget;
+  // private final double tolerance;
 
   public DriveForwardCommand(DriveSub driveSub, double driveTarget) {
     this.driveSub = driveSub;
     this.driveTarget = driveTarget;
+    // this.tolerance = tolerance;
   }
 
   @Override

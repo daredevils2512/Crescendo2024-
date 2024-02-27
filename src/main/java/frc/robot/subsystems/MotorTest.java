@@ -7,7 +7,7 @@ public class MotorTest {
   private final WPI_TalonSRX motor;
   
   public MotorTest() {
-    motor = new WPI_TalonSRX(9);
+    motor = new WPI_TalonSRX(50);
   }
 
   public void runIntake(double speed) {

@@ -15,14 +15,6 @@ public static Command runShooter(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
   }
 
-  public static Command runShooterOut(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
-  }
-
-  public static Command runShooterIn(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooter(-speed)).finallyDo(() -> shooterSub.runShooter(0));
-  }
-
   public static Command runShooterActuate(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).finallyDo(() -> shooterSub.runShooterActuate(0));
   }
@@ -32,9 +24,9 @@ public static Command runShooter(ShooterSub shooterSub, double speed) {
     .finallyDo(() -> shooterSub.runShooterActuate(0));
   }
 
-  public static Command setPosition(ShooterSub shooterSub, Position position, double speed) {
-    return shooterSub.run(() -> shooterSub.setPosition(position, speed));
-  }
+  // public static Command setPosition(ShooterSub shooterSub, Position position, double speed) {
+    // return shooterSub.run(() -> shooterSub.setPosition(position, speed));
+  // }
 
   public static Command setShooterUp(ShooterSub shooterSub, double speed) {
     return shooterSub.run(() -> shooterSub.runShooterActuate(speed));

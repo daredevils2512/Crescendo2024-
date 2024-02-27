@@ -14,14 +14,15 @@ public final class AutoCommands {
         .finallyDo(() -> driveSub.arcadeDrive(0, 0));
   }
 
-  public static Command autoDriveLeft(DriveSub driveSub, double speed, double time) {
+  public static Command autoDriveTurn(DriveSub driveSub, double speed, double time) {
     return driveSub.run(() -> driveSub.arcadeDrive(0, speed)).withTimeout(time)
         .finallyDo(() -> driveSub.arcadeDrive(0, 0));
   }
 
-  public static Command autoDriveAndTurn(DriveSub driveSub, double speed, double time) {
-    return driveSub.run(() -> driveSub.arcadeDrive(speed, speed)).withTimeout(time)
-        .finallyDo(() -> driveSub.arcadeDrive(0, 0));
+  public static Command autoDriveAndTurn(DriveSub driveSub, double speedMove, double speedTurn, double time) {
+    return driveSub.run(() -> driveSub.arcadeDrive(speedMove, speedTurn))
+        .finallyDo(() -> driveSub.arcadeDrive(0, 0))
+        .withTimeout(time);
   }
 
 }

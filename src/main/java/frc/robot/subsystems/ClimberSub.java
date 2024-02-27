@@ -19,26 +19,33 @@ public class ClimberSub extends SubsystemBase {
     limitSwitchTop = new DigitalInput(Constants.ClimberConstants.CLIMBER_LIMIT_SWITCH_TOP);
     limitSwitchBottom = new DigitalInput(Constants.ClimberConstants.CLIMBER_LIMIT_SWITCH_BOTTOM);
 
-    climberMotor2.follow(climberMotor);
+    climberMotor.setInverted(true);
+    climberMotor2.setInverted(true);
+
+    // climberMotor2.follow(climberMotor);
   }
 
-  public void runClimber(double speed) {
+  public void runClimberLeft(double speed) {
 
-    if (limitSwitchTop.get()) {
-      speed = Math.min(speed, 0);
-    }
-    if (limitSwitchBottom.get()) {
-      speed = Math.max(speed, 0);
-    }
+    // if (limitSwitchTop.get()) {
+    //   speed = Math.min(speed, 0);
+    // }
+    // if (limitSwitchBottom.get()) {
+    //   speed = Math.max(speed, 0);
+    // }
 
     climberMotor.set(speed);
   }
+    public void runClimberRight(double speed) {
+      climberMotor2.set(speed);
+    }
 
-  public boolean isAtTop() {
-    return limitSwitchTop.get();
-  }
 
-  public boolean isAtBottom() {
-    return limitSwitchBottom.get();
-  }
+  // public boolean isAtTop() {
+  //   return limitSwitchTop.get();
+  // }
+
+  // public boolean isAtBottom() {
+  //   return limitSwitchBottom.get();
+  // }
 }

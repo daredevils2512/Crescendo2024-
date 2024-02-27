@@ -5,15 +5,25 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSub;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class DriveCommands extends Command {
+  public static Command arcadeDrive(DriveSub driveSub, DoubleSupplier move, DoubleSupplier turn) {
+    return driveSub.run(() -> driveSub.arcadeDrive(move.getAsDouble(), turn.getAsDouble())).finallyDo(() -> driveSub.arcadeDrive(0, 0));
+  }
 
-public static Command toggleInverted(DriveSub driveSub){
+    public static Command toggleInverted(DriveSub driveSub){
   return driveSub.runOnce(()-> driveSub.setInverted(!driveSub.getInverted()));
   // return new InstantCommand(() -> driveSub.setInverted(false), driveSub);
 }
+
+// public static Command setInveted(DriveSub driveSub){
+//   return driveSub.setInverted(true);
+// }
 
 }
