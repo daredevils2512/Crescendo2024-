@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,12 +26,12 @@ public class ClimberSub extends SubsystemBase {
 
   public void runClimberLeft(double speed) {
 
-    // if (limitSwitchTop.get()) {
-    //   speed = Math.min(speed, 0);
-    // }
-    // if (limitSwitchBottom.get()) {
-    //   speed = Math.max(speed, 0);
-    // }
+    if (limitSwitchTop.get()) {
+      speed = Math.min(speed, 0);
+    }
+    if (limitSwitchBottom.get()) {
+      speed = Math.max(speed, 0);
+    }
 
     climberMotor.set(speed);
   }
@@ -41,11 +40,11 @@ public class ClimberSub extends SubsystemBase {
     }
 
 
-  // public boolean isAtTop() {
-  //   return limitSwitchTop.get();
-  // }
+  public boolean isAtTop() {
+    return limitSwitchTop.get();
+  }
 
-  // public boolean isAtBottom() {
-  //   return limitSwitchBottom.get();
-  // }
+  public boolean isAtBottom() {
+    return limitSwitchBottom.get();
+  }
 }

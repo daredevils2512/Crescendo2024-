@@ -88,9 +88,9 @@ public class RobotContainer {
     shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(-extreme.getStickY())));
     extreme.trigger.whileTrue(ShooterCommands.runShooter(shooterSub, -0.6));
     extreme.sideButton.whileTrue(ShooterCommands.runShooter(shooterSub, -1));
-    // extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Top, 0.6));
-    // extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Handoff, 0.6));
-    // extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Bottom, 0.6));
+    extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Top, 0.6));
+    extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Handoff, 0.6));
+    extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Bottom, 0.6));
 
     // Climber
     extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberLeft(climberSub, 1));

@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -56,27 +53,27 @@ public class ShooterSub extends SubsystemBase {
     Top, Handoff, Bottom
   };
 
-  // public void setPosition(Position position, double speed) {
-  //   switch (position) {
-  //     case Top:
-  //       runShooterActuate(speed);
-  //       break;
+  public void setPosition(Position position, double speed) {
+    switch (position) {
+      case Top:
+        runShooterActuate(speed);
+        break;
 
-  //     case Handoff: 
-  //     if (getDistance() > Constants.ShooterConstants.ENCODER_POSITION + Constants.ShooterConstants.TOLERANCE){      //change encoder position
-  //         runShooterActuate(-speed);
-  //     } else if (getDistance() < Constants.ShooterConstants.ENCODER_POSITION - Constants.ShooterConstants.TOLERANCE){
-  //       runShooterActuate(speed);
-  //     } else {
-  //       runShooterActuate(0);
-  //     }
-  //       break;
+      case Handoff: 
+      if (getDistance() > Constants.ShooterConstants.ENCODER_POSITION + Constants.ShooterConstants.TOLERANCE){      //change encoder position
+          runShooterActuate(-speed);
+      } else if (getDistance() < Constants.ShooterConstants.ENCODER_POSITION - Constants.ShooterConstants.TOLERANCE){
+        runShooterActuate(speed);
+      } else {
+        runShooterActuate(0);
+      }
+        break;
 
-  //     case Bottom:
-  //     runShooterActuate(-speed);
-  //       break;
-  //   }
-  // }
+      case Bottom:
+      runShooterActuate(-speed);
+        break;
+    }
+  }
 
   public boolean isAtTop() {
     return limitSwitchTop.get();
