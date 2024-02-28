@@ -10,8 +10,9 @@ import frc.robot.io.Extreme;
 import frc.robot.subsystems.ClimberSub;
 import frc.robot.subsystems.DriveSub;
 import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.ShooterArmSub;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.subsystems.ShooterSub.Position;
+import frc.robot.subsystems.ShooterArmSub.Position;
 
 import java.util.function.DoubleSupplier;
 
@@ -28,6 +29,7 @@ public class RobotContainer {
   private final DriveSub driveSub = new DriveSub();
   private final IntakeSub intakeSub = new IntakeSub();
   private final ShooterSub shooterSub = new ShooterSub();
+  private final ShooterArmSub shooterArmSub = new ShooterArmSub();
   private final ClimberSub climberSub = new ClimberSub();
   private final Extreme extreme = new Extreme(1);
   private final CommandXboxController xbox = new CommandXboxController(IoConstants.XBOX_CONTROLLER_PORT);
@@ -66,12 +68,12 @@ public class RobotContainer {
     xbox.rightTrigger().whileTrue(IntakeCommands.runIntake(intakeSub, 0.5));
 
     // Shooter
-    shooterSub.setDefaultCommand(shooterSub.run(() -> shooterSub.runShooterActuate(-extreme.getStickY())));
+    shooterArmSub.setDefaultCommand(shooterArmSub.run(() -> shooterArmSub.runShooterActuate(-extreme.getStickY())));
     extreme.trigger.whileTrue(ShooterCommands.runShooter(shooterSub, -0.6));
     extreme.sideButton.whileTrue(ShooterCommands.runShooter(shooterSub, -1));
-    extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Top, 0.6));
-    extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Handoff, 0.6));
-    extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterSub, Position.Bottom, 0.6));
+    extreme.baseFrontLeft.onTrue(ShooterCommands.setPosition(shooterArmSub, Position.Top, 0.6));
+    extreme.baseMiddleLeft.onTrue(ShooterCommands.setPosition(shooterArmSub, Position.Handoff, 0.6));
+    extreme.baseBackLeft.onTrue(ShooterCommands.setPosition(shooterArmSub, Position.Bottom, 0.6));
 
     // Climber
     extreme.joystickTopRight.whileTrue(ClimberCommands.runClimberLeft(climberSub, 1));
@@ -90,11 +92,11 @@ public class RobotContainer {
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
             .andThen(AutoCommands.autoDriveForward(driveSub, 0.18, 0.3))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
-            .alongWith(ShooterCommands.runTimedShooterActuate(shooterSub, -0.6, 2.4))
+            .alongWith(ShooterCommands.runTimedShooterActuate(shooterArmSub, -0.6, 2.4))
             )
             .andThen(ShooterCommands.runShooter(shooterSub, -1).withTimeout(1))
             .andThen(
-              ShooterCommands.runTimedShooterActuate(shooterSub, 0.7, 2)
+              ShooterCommands.runTimedShooterActuate(shooterArmSub, 0.7, 2)
                 .alongWith(AutoCommands.autoDriveAndTurn(driveSub, 0.5, -0.5, 1.8))
                 )
             .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));
@@ -107,11 +109,11 @@ public class RobotContainer {
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
             .andThen(AutoCommands.autoDriveForward(driveSub, 0.18, 0.3))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
-            .alongWith(ShooterCommands.runTimedShooterActuate(shooterSub, -0.6, 2.4))
+            .alongWith(ShooterCommands.runTimedShooterActuate(shooterArmSub, -0.6, 2.4))
             )
             .andThen(ShooterCommands.runShooter(shooterSub, -1).withTimeout(1))
             .andThen(
-              ShooterCommands.runTimedShooterActuate(shooterSub, 0.7, 2)
+              ShooterCommands.runTimedShooterActuate(shooterArmSub, 0.7, 2)
                 .alongWith(AutoCommands.autoDriveAndTurn(driveSub, 0.5, 0.5, 1.8))
                 )
             .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));

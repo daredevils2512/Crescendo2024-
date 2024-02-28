@@ -1,9 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.subsystems.ShooterArmSub;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.subsystems.ShooterSub.Position;
+import frc.robot.subsystems.ShooterArmSub.Position;
 
 public class ShooterCommands {
 
@@ -11,29 +11,22 @@ public class ShooterCommands {
     return shooterSub.run(() -> shooterSub.runShooter(speed)).finallyDo(() -> shooterSub.runShooter(0));
   }
 
-  public static Command runShooterActuate(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).finallyDo(() -> shooterSub.runShooterActuate(0));
-  }
-
-  public static Command runTimedShooterActuate(ShooterSub shooterSub, double speed, double time) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(speed)).withTimeout(time)
-      .finallyDo(() -> shooterSub.runShooterActuate(0));
-  }
-
-  public static Command setPosition(ShooterSub shooterSub, Position position, double speed) {
-    return shooterSub.run(() -> shooterSub.setPosition(position, speed));
-  }
-
-  public static Command setShooterUp(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(speed));
-  }
-
-  public static Command setShooterDown(ShooterSub shooterSub, double speed) {
-    return shooterSub.run(() -> shooterSub.runShooterActuate(-speed));
-  }
-
   public static Command runTimedShooter(ShooterSub shooterSub, double speed, double time) {
     return shooterSub.run(() -> shooterSub.runShooter(speed)).withTimeout(time)
       .finallyDo(() -> shooterSub.runShooter(0));
   }
+
+  public static Command runShooterActuate(ShooterArmSub shooterArmSub, double speed) {
+    return shooterArmSub.run(() -> shooterArmSub.runShooterActuate(speed)).finallyDo(() -> shooterArmSub.runShooterActuate(0));
+  }
+
+  public static Command runTimedShooterActuate(ShooterArmSub shooterArmSub, double speed, double time) {
+    return shooterArmSub.run(() -> shooterArmSub.runShooterActuate(speed)).withTimeout(time)
+      .finallyDo(() -> shooterArmSub.runShooterActuate(0));
+  }
+
+  public static Command setPosition(ShooterArmSub shooterArmSub, Position position, double speed) {
+    return shooterArmSub.run(() -> shooterArmSub.setPosition(position, speed));
+  }
+
 }

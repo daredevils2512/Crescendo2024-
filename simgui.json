@@ -11,6 +11,11 @@
       }
     },
     "Other Devices": {
+      "Talon SRX[7]": {
+        "header": {
+          "open": true
+        }
+      },
       "Victor SPX[5]": {
         "header": {
           "open": true
@@ -53,13 +58,13 @@
       "open": false
     },
     "transitory": {
-      "DriveSub": {
-        "open": true
-      },
       "LiveWindow": {
         ".status": {
           "open": true
         }
+      },
+      "ShooterArmSub": {
+        "open": true
       },
       "Shuffleboard": {
         ".metadata": {
