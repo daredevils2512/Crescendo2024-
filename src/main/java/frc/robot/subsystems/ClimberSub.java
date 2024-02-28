@@ -35,10 +35,10 @@ public class ClimberSub extends SubsystemBase {
 
     climberMotor.set(speed);
   }
-    public void runClimberRight(double speed) {
-      climberMotor2.set(speed);
-    }
 
+  public void runClimberRight(double speed) {
+    climberMotor2.set(speed);
+  }
 
   public boolean isAtTop() {
     return limitSwitchTop.get();

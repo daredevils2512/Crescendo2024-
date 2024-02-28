@@ -11,17 +11,17 @@ public final class AutoCommands {
 
   public static Command autoDriveForward(DriveSub driveSub, double speed, double time) {
     return driveSub.run(() -> driveSub.arcadeDrive(speed, 0)).withTimeout(time)
-        .finallyDo(() -> driveSub.arcadeDrive(0, 0));
+      .finallyDo(() -> driveSub.arcadeDrive(0, 0));
   }
 
   public static Command autoDriveTurn(DriveSub driveSub, double speed, double time) {
     return driveSub.run(() -> driveSub.arcadeDrive(0, speed)).withTimeout(time)
-        .finallyDo(() -> driveSub.arcadeDrive(0, 0));
+      .finallyDo(() -> driveSub.arcadeDrive(0, 0));
   }
 
   public static Command autoDriveAndTurn(DriveSub driveSub, double speedMove, double speedTurn, double time) {
     return driveSub.run(() -> driveSub.arcadeDrive(speedMove, speedTurn))
-        .finallyDo(() -> driveSub.arcadeDrive(0, 0))
+      .finallyDo(() -> driveSub.arcadeDrive(0, 0))
         .withTimeout(time);
   }
 

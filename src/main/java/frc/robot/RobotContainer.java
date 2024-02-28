@@ -4,7 +4,6 @@ import frc.robot.Constants.IoConstants;
 import frc.robot.commands.AutoCommands;
 import frc.robot.commands.ClimberCommands;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.DriveForwardCommand;
 import frc.robot.commands.IntakeCommands;
 import frc.robot.commands.ShooterCommands;
 import frc.robot.io.Extreme;
@@ -17,7 +16,6 @@ import frc.robot.subsystems.ShooterSub.Position;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 
 import edu.wpi.first.math.MathUtil;
@@ -31,13 +29,12 @@ public class RobotContainer {
   private final IntakeSub intakeSub = new IntakeSub();
   private final ShooterSub shooterSub = new ShooterSub();
   private final ClimberSub climberSub = new ClimberSub();
-  private final Extreme extreme = new Extreme(1); // constants??
+  private final Extreme extreme = new Extreme(1);
   private final CommandXboxController xbox = new CommandXboxController(IoConstants.XBOX_CONTROLLER_PORT);
   private enum Auto {
     None, DriveForward, BlueFullAuto, RedFullAuto, SpeakerAuto, StageAuto
   }
   private final SendableChooser<Auto> chooser = new SendableChooser<>();
-  // private final PIDTest pid = new PIDTest();
 
   public RobotContainer() {
     configureBindings();
@@ -50,26 +47,10 @@ public class RobotContainer {
     chooser.addOption("Stage Auto", Auto.StageAuto);
     SmartDashboard.putData("Auto", chooser);
 
-    UsbCamera intakeCamera = CameraServer.startAutomaticCapture();
-    intakeCamera.setResolution(640, 480);
-    // UsbCamera shooterCamera = CameraServer.startAutomaticCapture(2);
-    // shooterCamera.setResolution(640, 480);
-
-    // MjpegServer server = new MjpegServer(null, 14);
-    // server.setSource(intakeCamera);
-    CameraServer.getServer();
-
-    // if (leftBumper.false) {
-    // intakeCamera.getVideoMode;
-    // }else (leftBumper.true) {
-    // shooterCamera.getVideoMode();
-    // }
-
-    // if (driveSub.arcadeDrive(move, -turn)){
-    // set.intakeCamera;
-    // } else (driveSub.arcadeDrive(-move, turn)){
-    // get.shooterCamera;
-    // }
+    // UsbCamera intakeCamera = CameraServer.startAutomaticCapture();
+    // intakeCamera.setResolution(640, 480);
+    // CameraServer.getServer();
+    
   }
 
   private void configureBindings() {
@@ -115,7 +96,8 @@ public class RobotContainer {
               ShooterCommands.runTimedShooterActuate(shooterSub, 0.7, 2)
                 .alongWith(AutoCommands.autoDriveAndTurn(driveSub, 0.5, -0.5, 1.8))
                 )
-           .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8));
+           .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));
+           
 
       case RedFullAuto:
         return (
@@ -130,8 +112,9 @@ public class RobotContainer {
               ShooterCommands.runTimedShooterActuate(shooterSub, 0.7, 2)
                 .alongWith(AutoCommands.autoDriveAndTurn(driveSub, 0.5, 0.5, 1.8))
                 )
-            .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8));
+            .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));
 
+            
       case SpeakerAuto:
         return  AutoCommands.autoDriveForward(driveSub, 0.3, 1);
       

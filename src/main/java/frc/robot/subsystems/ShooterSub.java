@@ -60,7 +60,10 @@ public class ShooterSub extends SubsystemBase {
         break;
 
       case Handoff: 
-      if (getDistance() > Constants.ShooterConstants.ENCODER_POSITION + Constants.ShooterConstants.TOLERANCE){      //change encoder position
+      if (getDistance() > Constants.ShooterConstants.ENCODER_POSITION + Constants.ShooterConstants.TOLERANCE){
+        
+          //CHANGE ENCODER VALUE
+                  
           runShooterActuate(-speed);
       } else if (getDistance() < Constants.ShooterConstants.ENCODER_POSITION - Constants.ShooterConstants.TOLERANCE){
         runShooterActuate(speed);
