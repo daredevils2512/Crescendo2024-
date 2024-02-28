@@ -85,7 +85,8 @@ public class RobotContainer {
 
       case BlueFullAuto:
         return (
-          AutoCommands.autoDriveAndTurn(driveSub, -0.7, -0.56, 1.2)
+          DriveCommands.setInverted(driveSub, false)
+            .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.7, -0.56, 1.2))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
             .andThen(AutoCommands.autoDriveForward(driveSub, 0.18, 0.3))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
@@ -96,12 +97,13 @@ public class RobotContainer {
               ShooterCommands.runTimedShooterActuate(shooterSub, 0.7, 2)
                 .alongWith(AutoCommands.autoDriveAndTurn(driveSub, 0.5, -0.5, 1.8))
                 )
-           .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));
+            .andThen(IntakeCommands.runIntakeToShooter(intakeSub, shooterSub, 0.8).withTimeout(2));
            
 
       case RedFullAuto:
-        return (
-          AutoCommands.autoDriveAndTurn(driveSub, -0.7, 0.56, 1.2)
+        return (        
+          DriveCommands.setInverted(driveSub, false)
+            .andThen(AutoCommands.autoDriveAndTurn(driveSub, -0.7, 0.56, 1.2))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))
             .andThen(AutoCommands.autoDriveForward(driveSub, 0.18, 0.3))
             .andThen(driveSub.runOnce(()-> driveSub.arcadeDrive(0, 0)))

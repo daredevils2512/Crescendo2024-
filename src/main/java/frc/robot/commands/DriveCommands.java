@@ -18,7 +18,10 @@ public class DriveCommands extends Command {
 
   public static Command toggleInverted(DriveSub driveSub) {
     return driveSub.runOnce(() -> driveSub.setInverted(!driveSub.getInverted()));
-    // return new InstantCommand(() -> driveSub.setInverted(false), driveSub);
+  }
+
+  public static Command setInverted(DriveSub driveSub, boolean inverted) {
+    return driveSub.runOnce(() -> driveSub.setInverted(inverted));
   }
 
   // public static Command setInveted(DriveSub driveSub){
