@@ -6,12 +6,32 @@
       }
     },
     "Encoders": {
+      "2": {
+        "header": {
+          "open": true
+        }
+      },
       "window": {
         "visible": true
       }
     },
     "Other Devices": {
+      "Talon SRX[5]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[6]": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon SRX[7]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[9]": {
         "header": {
           "open": true
         }
@@ -48,16 +68,23 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto": "String Chooser",
       "/SmartDashboard/Auto choices": "String Chooser"
+    },
+    "windows": {
+      "/SmartDashboard/Auto": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
     "Retained Values": {
       "open": false
     },
     "transitory": {
+      "DriveSub": {
+        "open": true
+      },
       "LiveWindow": {
         ".status": {
           "open": true
@@ -73,10 +100,22 @@
         ".recording": {
           "open": true
         }
+      },
+      "SmartDashboard": {
+        "Auto": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Auto/options": {
+            "open": true
+          }
+        },
+        "open": true
       }
     }
   },
   "NetworkTables Info": {
+    "Connections": {
+      "open": true
+    },
     "visible": true
   }
 }

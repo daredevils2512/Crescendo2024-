@@ -7,17 +7,12 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     // Motors
-    public static final int DRIVE_FRONT_LEFT_ID = 1; // BACK
-    public static final int DRIVE_BACK_LEFT_ID = 2; // FRONT
+    public static final int DRIVE_FRONT_LEFT_ID = 1;
+    public static final int DRIVE_BACK_LEFT_ID = 2; 
     public static final int DRIVE_FRONT_RIGHT_ID = 3;
     public static final int DRIVE_BACK_RIGHT_ID = 4;
 
     // Encoders
-    public static final int LEFT_ENCODER_A = 0;
-    public static final int LEFT_ENCODER_B = 1;
-    public static final int RIGHT_ENCODER_A = 2;
-    public static final int RIGHT_ENCODER_B = 3;
-    public static final int PIGEON_ID = 14;
     public static final double PULSES_PER_ROTATIONS = 256;
     public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI;
     public static final double DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE / PULSES_PER_ROTATIONS;
@@ -40,20 +35,26 @@ public final class Constants {
     public static final int SHOOTER_MOTOR_ID = 6;
     public static final int SHOOTER_ACTUATE_MOTOR_ID = 7;
 
+    public static final int RIGHT_LAUNCHER_MOTOR_ID = 8;
+    public static final int LEFT_LAUNCHER_MOTOR_ID = 9;
+
     // Encoders
-    public static final int SHOOTER_ENCODER_A = 8;
-    public static final int SHOOTER_ENCODER_B = 9;
-    public static final int SHOOTER_LIMIT_SWITCH_TOP = 10;
-    public static final int SHOOTER_LIMIT_SWITCH_BOTTOM = 11;
-    public static final double ENCODER_POSITION = 2;
-    public static final double TOLERANCE = 0.3;
+    public static final int SHOOTER_ENCODER_A = 0;
+    public static final int SHOOTER_ENCODER_B = 1;
+    public static final int LIMIT_SWITCH_BOTTOM = 2;
+    public static final int LIMIT_SWITCH_TOP = 3;
+    public static final double ENCODER_POSITION = 13.5;
+    public static final double TOP_DEGREES = 105;
+    public static final double DEGREES_PER_PULSE = 0.28125;
+    public static final double START_ANGLE = 0;
+    public static final double TOLERANCE = 3;
 
   }
 
   public static class ClimberConstants {
     // Motors
-    public static final int CLIMBER_MOTOR_ID = 8;
-    public static final int CLIMBER_MOTOR2_ID = 9;
+    public static final int CLIMBER_MOTOR_RIGHT_ID = 10;//8
+    public static final int CLIMBER_MOTOR_LEFT_ID = 11;//9
 
     // Encoders
     public static final int CLIMBER_LIMIT_SWITCH_TOP = 12;

@@ -24,8 +24,11 @@ public class DriveCommands extends Command {
     return driveSub.runOnce(() -> driveSub.setInverted(inverted));
   }
 
-  // public static Command setInveted(DriveSub driveSub){
-  // return driveSub.setInverted(true);
-  // }
+  public static Command setFlip(DriveSub driveSub, boolean flip){
+    return driveSub.runOnce(() -> driveSub.setFlip(flip));
+  }
 
+  public static Command toggleFlip(DriveSub driveSub){
+    return driveSub.runOnce(() -> driveSub.setFlip(!driveSub.getFlip()));
+  }
 }

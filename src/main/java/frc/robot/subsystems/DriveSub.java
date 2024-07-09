@@ -32,12 +32,9 @@ public class DriveSub extends SubsystemBase {
 
   private final SlewRateLimiter leftRateLimiter;
   private final SlewRateLimiter rightRateLimiter;
-  private final Encoder leftEncoder;
-  private final Encoder rightEncoder;
 
   private boolean inverted = false;
-
-  private final Pigeon2 pigeon;
+  private boolean flip = false;
 
   public DriveSub() {
     frontLeft = new CANSparkMax(Constants.DrivetrainConstants.DRIVE_FRONT_LEFT_ID, MotorType.kBrushless);
@@ -55,21 +52,20 @@ public class DriveSub extends SubsystemBase {
     leftRateLimiter = new SlewRateLimiter(3);
     rightRateLimiter = new SlewRateLimiter(3);
 
-    leftEncoder = new Encoder(Constants.DrivetrainConstants.LEFT_ENCODER_A, Constants.DrivetrainConstants.LEFT_ENCODER_B);
-    rightEncoder = new Encoder(Constants.DrivetrainConstants.RIGHT_ENCODER_A, Constants.DrivetrainConstants.RIGHT_ENCODER_B);
-
-    leftEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
-    rightEncoder.setDistancePerPulse(Constants.DrivetrainConstants.DISTANCE_PER_PULSE);
-
     backLeft.follow(frontLeft, false);
     backRight.follow(frontRight, false);
 
-    pigeon = new Pigeon2(Constants.DrivetrainConstants.PIGEON_ID);
   }
 
   public void arcadeDrive(double move, double turn) {
     if (getInverted()) {
       move = -move;
+    }
+
+    if(getFlip()){
+      double newMove = turn;
+      turn = move;
+      move = newMove;
     }
 
     WheelSpeeds wheelSpeeds = DifferentialDrive.arcadeDriveIK(move, -turn, true); // documentation is backwards
@@ -90,8 +86,22 @@ public class DriveSub extends SubsystemBase {
     inverted = value;
   }
 
-  public double getAngle() {
-    return pigeon.getAngle();
+  public boolean getFlip(){
+    return flip;
+  }
+
+  public void setFlip(boolean flipValue){
+    flip = flipValue;
+  }
+
+  public void stopDrive(){
+    leftOutputPublisher.set(0);
+    rightOutputPublisher.set(0);
+
+    leftRateLimiter.reset(0);
+    rightRateLimiter.reset(0);
+    frontLeft.set(0);
+    frontRight.set(0);
   }
 
   public double getLeftDistance() {
